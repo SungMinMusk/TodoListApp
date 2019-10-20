@@ -5,13 +5,12 @@ module.exports = (api, options) => {
       const getAssetPath = require('../util/getAssetPath')
       const filename = getAssetPath(
         options,
-        `js/[name]${isLegacyBundle ? `-legacy` : ``}.[chunkhash:8].js`,
-        true /* placeAtRootIfRelative */
+        `js/[name]${isLegacyBundle ? `-legacy` : ``}${options.filenameHashing ? '.[contenthash:8]' : ''}.js`
       )
 
       webpackConfig
         .mode('production')
-        .devtool('source-map')
+        .devtool(options.productionSourceMap ? 'source-map' : false)
         .output
           .filename(filename)
           .chunkFilename(filename)
@@ -19,16 +18,18 @@ module.exports = (api, options) => {
       // keep module.id stable when vendor modules does not change
       webpackConfig
         .plugin('hash-module-ids')
-          .use(require('webpack/lib/HashedModuleIdsPlugin'))
+          .use(require('webpack/lib/HashedModuleIdsPlugin'), [{
+            hashDigest: 'hex'
+          }])
 
       // disable optimization during tests to speed things up
       if (process.env.VUE_CLI_TEST) {
         webpackConfig.optimization.minimize(false)
       } else {
-        const UglifyPlugin = require('uglifyjs-webpack-plugin')
-        const uglifyOptions = require('./uglifyOptions')
+        const TerserPlugin = require('terser-webpack-plugin')
+        const terserOptions = require('./terserOptions')
         webpackConfig.optimization.minimizer([
-          new UglifyPlugin(uglifyOptions(options))
+          new TerserPlugin(terserOptions(options))
         ])
       }
     }

@@ -1,8 +1,8 @@
 <style>
     * {  box-sizing: border-box;  }
     .header {
-        background-color: purple; padding: 30px 30px;
-        color: yellow; text-align: center;
+        background-color: gray; padding: 30px 30px;
+        color: white; text-align: center;
     }
     .header:after {
         content: ""; display: table; clear: both;
@@ -23,6 +23,6 @@ import List from './List';
 
 export default {
     name : 'todo-list',
-    components : { InputTodo, List }
+    components : { InputTodo, List },
 }
 </script>

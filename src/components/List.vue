@@ -35,9 +35,9 @@ ul li.checked::before {
 <template>
     <transition-group name="list" tag="ul">
         <li v-for="a in todolist" :key="a.id" :class="checked(a.done)"
-            @click="doneToggle({ id: a.id })">
+            @click="doneToggle({ id: a.id, done: a.done })">
             <span>{{ a.todo }}</span>
-            <span v-if="a.done"> (완료)</span>
+            <span v-if="a.done==='true'"> (완료)</span>
             <span class="close" @click.stop="deleteTodo({id:a.id})">&#x00D7;</span>
         </li>
     </transition-group>
@@ -51,11 +51,15 @@ export default {
     computed : mapState(['todolist']),
     methods : {
         checked : function(done) {
-            if(done) return { checked:true };
+            if(done==="true") return { checked:true };
             else return { checked:false };
         },
         ...mapActions([ Constant.DELETE_TODO, Constant.DONE_TOGGLE ])
-    }
+    },
+    mounted() {
+            console.log("Get Todolist from server");
+            this.$store.dispatch(Constant.FETCH_TODO);
+    },
     // methods : {
     //     checked : function(done) {
     //         if(done) return { checked:true };
