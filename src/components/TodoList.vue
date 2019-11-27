@@ -15,14 +15,14 @@
             <input-todo />
         </div>
         <list></list>
+        <tui-grid></tui-grid>
     </div>  
 </template>
 <script type="text/javascript">
 import InputTodo from './InputTodo';
 import List from './List';
-
 export default {
     name : 'todo-list',
-    components : { InputTodo, List },
+    components : { InputTodo, List},
 }
 </script>

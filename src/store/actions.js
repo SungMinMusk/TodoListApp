@@ -20,7 +20,7 @@ export default {
     [Constant.DELETE_TODO]: (store, payload) => {
         console.log("###deleteTodo!!!", payload);
         axios.get("http://localhost:8070/api/deltodo", {
-                params: { id: payload.id }
+                params: { id: payload.id, todo: payload.todo }
             })
             .then((response) => {
                 store.commit(Constant.DELETE_TODO, response);

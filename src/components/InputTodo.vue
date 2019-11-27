@@ -14,7 +14,7 @@
 <template>
     <div>
         <input class="input" type="text" id="task" v-model.trim="todo" 
-            placeholder="입력 후 엔터!" v-on:keyup.enter="addTodo">
+            placeholder="입력 후 엔터 !" v-on:keyup.enter="addTodo">
         <span class="addbutton" v-on:click="addTodo">추 가</span>
     </div>    
 </template>

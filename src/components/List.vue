@@ -38,7 +38,7 @@ ul li.checked::before {
             @click="doneToggle({ id: a.id, done: a.done })">
             <span>{{ a.todo }}</span>
             <span v-if="a.done==='true'"> (완료)</span>
-            <span class="close" @click.stop="deleteTodo({id:a.id})">&#x00D7;</span>
+            <span class="close" @click.stop="deleteTodo({id:a.id,todo:a.todo})">&#x00D7;</span>
         </li>
     </transition-group>
 </template>
